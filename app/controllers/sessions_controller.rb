@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
     password = params[:session][:password]
     if login(email, password)
       flash[:success] = 'you have been logged in'
-      redirect_to @user
+      redirect_to tasks_path
     else
       flash.now[:danger] = 'you have not been logged in'
       render 'new'

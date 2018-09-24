@@ -1,7 +1,10 @@
 class TasksController < ApplicationController
   before_action :require_user_logged_in
   def index
-    @task = Task.all.page(params[:page]).per(30)
+    if logged_in?
+      @task = current_user.tasks.build  
+      @tasks = current_user.tasks.order('created_at DESC').page(params[:page])
+    end
   end
   
   def show
@@ -13,15 +16,15 @@ class TasksController < ApplicationController
   end
   
   def create
-        @task = Task.new(task_params)
-    
+    @task = current_user.tasks.build(task_params)
     if @task.save
-      flash[:success] = 'メッセージが正常に投稿されました'
-      redirect_to @task
+      flash[:success] = 'task added'
+      redirect_to root_url
     else
-      flash.now[:danger] = 'メッセージが投稿されませんでした'
-      render :new
-    end  
+      @tasks = current_user.tasks.order('created_at DESC').page(params[:page])
+      flash.now[:danger] = 'task not added'
+      render 'new'
+    end
   end
   
   def edit
@@ -42,10 +45,9 @@ class TasksController < ApplicationController
   
   def destroy
     set_task
-    @task.destroy
-    
-    flash[:success] = 'メッセージは正常に削除されました'
-    redirect_to tasks_url
+    @micropost.destroy
+    flash[:success] = 'tasl deleted'
+    redirect_back(fallback_location: root_path)
   end  
     
     
