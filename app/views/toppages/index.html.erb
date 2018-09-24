@@ -1,5 +1,9 @@
-<div class="center jumbotron">
-  <div class="text-center">
-    <h1>TASK LIST</h1>
+<% if logged_in? %>
+  <P>user:<%= current_user.name %></P>
+<% else %>
+  <div class="center jumbotron">
+    <div class="text-center">
+      <h1>TASK LIST</h1>
+    </div>
   </div>
-</div>
+<% end %>  
