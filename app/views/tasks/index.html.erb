@@ -1,4 +1,4 @@
-<a class="btn btn-success" href="tasks/new" role="button">New Taks</a>
+<a class="btn btn-success" href="tasks/new" role="button">add New Task</a>
 <ul class="media-list">
   <% @tasks.each do |task| %>
     <li class="media">
@@ -9,7 +9,9 @@
         <div>
           <p>タスク内容＝<%= task.content %></p>
           <p>ステータス＝<%= task.status %></p>
-          <%= link_to "Delete", task, method: :delete, data: { confirm: "You sure?" }, class: 'btn btn-danger btn-xs' %>
+          <%= link_to 'Delete', task, method: :delete, data: { confirm: "You sure?" }, class: 'btn btn-danger btn-xs' %>
+          <%= link_to 'Edit', edit_task_path(task), class: 'btn btn-primary btn-xs' %>
+          <%= link_to 'show detail', task_path(task), class: 'btn btn-primary btn-xs' %>
         </div>
       </div>
     </li>
